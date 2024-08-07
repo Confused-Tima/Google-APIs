@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "google-apis"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.0.8"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+mypy = "^1.11.1"
+flake8-bugbear = "^24.4.26"
+django-stubs = "^5.0.4"
+flake8-pyproject = "^1.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.flake8]
+ignore = ["E203", "W503", "W504"]
+max-line-length = 95
+exlcude = [".git", "__pycache__", "build", "dist", ".eggs"]
+
+
+[tool.black]
+line-length = 88
