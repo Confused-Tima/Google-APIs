@@ -1,0 +1,12 @@
+default:
+  DEBUG: true
+
+  # Internationalization
+  LANGUAGE_CODE: "en-us"
+  TIME_ZONE: "UTC"
+  USE_TZ: true
+
+prod:
+  DEBUG: false
+  ALLOWED_HOSTS:
+    - "*"
