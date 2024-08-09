@@ -5,6 +5,7 @@ default:
   LANGUAGE_CODE: "en-us"
   TIME_ZONE: "UTC"
   USE_TZ: true
+  BASE_COUNTRY: "IN"
 
 prod:
   DEBUG: false

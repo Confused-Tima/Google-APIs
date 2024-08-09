@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 django = "^5.0.8"
 dynaconf = "^3.2.6"
+requests = "^2.32.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.8.0"
@@ -24,7 +25,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.flake8]
 ignore = ["E203", "W503", "W504"]
-max-line-length = 95
+max-line-length = 88
 exlcude = [".git", "__pycache__", "build", "dist", ".eggs"]
 
 
