@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 import requests
 from humanfriendly import format_timespan
 from django.http import JsonResponse
+from django.views.generic.edit import FormMixin
 
 
 def FormErrors(*args):
@@ -39,21 +40,21 @@ def RedirectParams(**kwargs):
     return response
 
 
-class AjaxFormMixin(object):
+class AjaxFormMixin(FormMixin):
     """
     Mixin to ajaxify django form.
     Can be over written in view by calling form_valid method.
     """
 
     def form_invalid(self, form):
-        response = super(AjaxFormMixin, self).form_invalid(form)
+        response = super().form_invalid(form)
         if self.request.is_ajax():
             message = FormErrors(form)
             return JsonResponse({"result": "Error", "message": message})
         return response
 
     def form_valid(self, form):
-        response = super(AjaxFormMixin, self).form_valid(form)
+        response = super().form_valid(form)
         if self.request.is_ajax():
             form.save()
             return JsonResponse({"result": "Success", "message": ""})
