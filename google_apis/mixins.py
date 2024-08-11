@@ -61,7 +61,7 @@ class AjaxFormMixin(FormMixin):
         return response
 
 
-def Directions(*args, **kwargs):
+def Directions(**kwargs):
     """
     Handles directions from Google
     """
@@ -99,23 +99,24 @@ def Directions(*args, **kwargs):
         duration = 0
         route_list = []
 
-        for route in range(len(routes)):
+        # for route in range(len(routes)):
+        for route in routes:
 
-            distance += int(routes[route]["distance"]["value"])
-            duration += int(routes[route]["duration"]["value"])
+            distance += int(route["distance"]["value"])
+            duration += int(route["duration"]["value"])
 
             route_step = {
-                "origin": routes[route]["start_address"],
-                "destination": routes[route]["end_address"],
-                "distance": routes[route]["distance"]["text"],
-                "duration": routes[route]["duration"]["text"],
+                "origin": route["start_address"],
+                "destination": route["end_address"],
+                "distance": route["distance"]["text"],
+                "duration": route["duration"]["text"],
                 "steps": [
                     [
                         s["distance"]["text"],
                         s["duration"]["text"],
                         s["html_instructions"],
                     ]
-                    for s in routes[route]["steps"]
+                    for s in route["steps"]
                 ],
             }
 
