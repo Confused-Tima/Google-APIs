@@ -14,3 +14,4 @@ def register_user_signals() -> None:
     """
     Dummy function (helps run @receiver decorator from app.py)
     """
+    pass

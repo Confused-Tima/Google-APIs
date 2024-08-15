@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import FormView
 
 from google_apis.mixins import (
     AjaxFormMixin,
@@ -43,7 +44,7 @@ def profile_view(request):
 
     form = UserProfileForm(instance=up)
 
-    if request.is_ajax():
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
         form = UserProfileForm(data=request.POST, instance=up)
         if form.is_valid():
             obj = form.save()
@@ -80,10 +81,10 @@ class SignUpView(AjaxFormMixin):
 
     # over write the mixin logic to get, check and save reCAPTURE score
     def form_valid(self, form: UserForm):
-        resp = super().form_invalid()
+        resp = super(FormView, self).form_valid(form)
         if resp is not None:
             return resp
-        if not self.request.is_ajax():
+        if self.request.headers.get('x-requested-with') != 'XMLHttpRequest':
             return HttpResponseBadRequest("Invalid request")
 
         token = form.cleaned_data.get("token")
@@ -119,8 +120,8 @@ class SignInView(AjaxFormMixin):
     success_url = "/"
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        if self.request.is_ajax():
+        response = super().form_valid(form, save=False)
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             # attempt to authenticate user

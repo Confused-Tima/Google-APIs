@@ -4,14 +4,18 @@ from urllib.parse import urlencode
 import requests
 from humanfriendly import format_timespan
 from django.http import JsonResponse
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormView
 
 
 def FormErrors(*args):
     """
     Handles form error that are passed back to AJAX calls
     """
-    return " ".join(f.errors.as_text() for f in args if f.erros)
+    message = ""
+    for f in args:
+        if f.errors:
+            message = f.errors.as_text()
+    return message
 
 
 def reCAPTCHAValidation(token):
@@ -40,7 +44,7 @@ def RedirectParams(**kwargs):
     return response
 
 
-class AjaxFormMixin(FormMixin):
+class AjaxFormMixin(FormView):
     """
     Mixin to ajaxify django form.
     Can be over written in view by calling form_valid method.
@@ -48,15 +52,17 @@ class AjaxFormMixin(FormMixin):
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
-        if self.request.is_ajax():
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
             message = FormErrors(form)
             return JsonResponse({"result": "Error", "message": message})
         return response
 
-    def form_valid(self, form):
+    def form_valid(self, form, save=True):
         response = super().form_valid(form)
-        if self.request.is_ajax():
-            form.save()
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
+            print("Got save:", save)
+            if save:
+                form.save()
             return JsonResponse({"result": "Success", "message": ""})
         return response
 

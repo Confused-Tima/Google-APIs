@@ -8,6 +8,6 @@ default:
   BASE_COUNTRY: "IN"
 
 prod:
-  DEBUG: false
+  DEBUG: true
   ALLOWED_HOSTS:
     - "*"

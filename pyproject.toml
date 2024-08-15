@@ -10,6 +10,7 @@ python = "^3.11"
 django = "^5.0.8"
 dynaconf = "^3.2.6"
 requests = "^2.32.3"
+humanfriendly = "^10.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.8.0"

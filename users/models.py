@@ -6,7 +6,7 @@ class UserProfile(models.Model):
     """This model extends the built-in User Model"""
 
     timestamp = models.DateTimeField(auto_now_add=True)
-    updated = models.DateField(aut_now=True)
+    updated = models.DateField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     address = models.CharField(

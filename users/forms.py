@@ -61,7 +61,7 @@ class AuthForm(AuthenticationForm):
         required=True,
         widget=forms.EmailInput(attrs={"placeholder": "*Email.."}),
     )
-    password1 = forms.CharField(
+    password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
                 "placeholder": "*Password..",

@@ -10,6 +10,9 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    print("=--->>Running in Debug and loading static url")
     urlpatterns += static(
         settings.STATIC_URL, document_root=settings.STATIC_ROOT
     )  # type: ignore
+else:
+    print("Not Running in Debug")
